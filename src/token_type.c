@@ -1,0 +1,109 @@
+#include "token_type.h"
+#include <assert.h>
+
+const char *ck_token_type_str(ck_token_type type) {
+    assert(type > 0 && type < CK_TOKEN_TYPE_COUNT);
+
+    switch (type) {
+    case CK_TOK_LPAREN:
+        return "LPAREN";
+    case CK_TOK_RPAREN:
+        return "RPAREN";
+    case CK_TOK_LBRACE:
+        return "LBRACE";
+    case CK_TOK_RBRACE:
+        return "RBRACE";
+    case CK_TOK_LBRACKET:
+        return "LBRACKET";
+    case CK_TOK_RBRACKET:
+        return "RBRACKET";
+    case CK_TOK_COMMA:
+        return "COMMA";
+    case CK_TOK_DOT:
+        return "DOT";
+    case CK_TOK_TILDE:
+        return "TILDE";
+    case CK_TOK_SEMICOLON:
+        return "SEMICOLON";
+    case CK_TOK_COLON:
+        return "COLON";
+    case CK_TOK_MINUS:
+        return "MINUS";
+    case CK_TOK_MINUS_EQUAL:
+        return "MINUS_EQUAL";
+    case CK_TOK_PLUS:
+        return "PLUS";
+    case CK_TOK_PLUS_EQUAL:
+        return "PLUS_EQUAL";
+    case CK_TOK_SLASH:
+        return "SLASH";
+    case CK_TOK_SLASH_EQUAL:
+        return "SLASH_EQUAL";
+    case CK_TOK_STAR:
+        return "STAR";
+    case CK_TOK_STAR_EQUAL:
+        return "STAR_EQUAL";
+    case CK_TOK_BANG:
+        return "BANG";
+    case CK_TOK_BANG_EQUAL:
+        return "BANG_EQUAL";
+    case CK_TOK_EQUAL:
+        return "EQUAL";
+    case CK_TOK_EQUAL_EQUAL:
+        return "EQUAL_EQUAL";
+    case CK_TOK_GREATER:
+        return "GREATER";
+    case CK_TOK_GREATER_EQUAL:
+        return "GREATER_EQUAL";
+    case CK_TOK_LESS:
+        return "LESS";
+    case CK_TOK_LESS_EQUAL:
+        return "LESS_EQUAL";
+    case CK_TOK_IDENTIFIER:
+        return "IDENTIFIER";
+    case CK_TOK_STRING:
+        return "STRING";
+    case CK_TOK_NUMBER:
+        return "NUMBER";
+    case CK_TOK_AND:
+        return "AND";
+    case CK_TOK_OR:
+        return "OR";
+    case CK_TOK_NOT:
+        return "NOT";
+    case CK_TOK_IF:
+        return "IF";
+    case CK_TOK_ELSE:
+        return "ELSE";
+    case CK_TOK_ELIF:
+        return "ELIF";
+    case CK_TOK_FN:
+        return "FN";
+    case CK_TOK_VAR:
+        return "VAR";
+    case CK_TOK_FOR:
+        return "FOR";
+    case CK_TOK_IN:
+        return "IN";
+    case CK_TOK_WHILE:
+        return "WHILE";
+    case CK_TOK_TRUE:
+        return "TRUE";
+    case CK_TOK_FALSE:
+        return "FALSE";
+    case CK_TOK_NONE:
+        return "NONE";
+    case CK_TOK_BREAK:
+        return "BREAK";
+    case CK_TOK_RETURN:
+        return "RETURN";
+    case CK_TOK_END_OF_FILE:
+        return "END_OF_FILE";
+    case CK_TOK_ERR_UNEXPECTED_CHAR:
+        return "ERR_UNEXPECTED_CHAR";
+    case CK_TOK_ERR_UNTERMINATED_STRING:
+        return "ERR_UNTERMINATED_STRING";
+    default:
+        return "UNKNOWN";
+    }
+}
