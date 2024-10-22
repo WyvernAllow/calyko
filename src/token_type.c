@@ -3,7 +3,7 @@
 #include <assert.h>
 
 const char *ck_token_type_str(ck_token_type type) {
-    assert(type > 0 && type < CK_TOKEN_TYPE_COUNT);
+    assert(type >= 0 && type < CK_TOKEN_TYPE_COUNT);
 
     switch (type) {
     case CK_TOK_LPAREN:
