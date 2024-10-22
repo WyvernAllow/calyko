@@ -70,8 +70,6 @@ const char *ck_token_type_str(ck_token_type type) {
         return "AND";
     case CK_TOK_OR:
         return "OR";
-    case CK_TOK_NOT:
-        return "NOT";
     case CK_TOK_IF:
         return "IF";
     case CK_TOK_ELSE:

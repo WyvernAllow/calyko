@@ -102,14 +102,14 @@ typedef struct keyword_pair {
 } keyword_pair;
 
 static const keyword_pair keywords[] = {
-    {CK_TOK_AND, "and", 3},     {CK_TOK_OR, "or", 2},
-    {CK_TOK_NOT, "not", 3},     {CK_TOK_IF, "if", 2},
-    {CK_TOK_ELSE, "else", 4},   {CK_TOK_ELIF, "elif", 4},
-    {CK_TOK_FN, "fn", 2},       {CK_TOK_VAR, "var", 3},
-    {CK_TOK_FOR, "for", 3},     {CK_TOK_IN, "in", 2},
-    {CK_TOK_WHILE, "while", 5}, {CK_TOK_TRUE, "true", 4},
-    {CK_TOK_FALSE, "false", 5}, {CK_TOK_NONE, "none", 4},
-    {CK_TOK_BREAK, "break", 5}, {CK_TOK_RETURN, "return", 6},
+    {CK_TOK_AND, "and", 3},       {CK_TOK_OR, "or", 2},
+    {CK_TOK_IF, "if", 2},         {CK_TOK_ELSE, "else", 4},
+    {CK_TOK_ELIF, "elif", 4},     {CK_TOK_FN, "fn", 2},
+    {CK_TOK_VAR, "var", 3},       {CK_TOK_FOR, "for", 3},
+    {CK_TOK_IN, "in", 2},         {CK_TOK_WHILE, "while", 5},
+    {CK_TOK_TRUE, "true", 4},     {CK_TOK_FALSE, "false", 5},
+    {CK_TOK_NONE, "none", 4},     {CK_TOK_BREAK, "break", 5},
+    {CK_TOK_RETURN, "return", 6},
 };
 
 static ck_token_type lex_identifier(ck_lexer *lexer) {
@@ -178,53 +178,21 @@ static ck_token_type next_type(ck_lexer *lexer) {
     case ':':
         return CK_TOK_COLON;
     case '-':
-        if (match(lexer, '=')) {
-            return CK_TOK_MINUS_EQUAL;
-        } else {
-            return CK_TOK_MINUS;
-        }
+        return match(lexer, '=') ? CK_TOK_MINUS_EQUAL : CK_TOK_MINUS;
     case '+':
-        if (match(lexer, '=')) {
-            return CK_TOK_PLUS_EQUAL;
-        } else {
-            return CK_TOK_PLUS;
-        }
+        return match(lexer, '=') ? CK_TOK_PLUS_EQUAL : CK_TOK_PLUS;
     case '/':
-        if (match(lexer, '=')) {
-            return CK_TOK_SLASH_EQUAL;
-        } else {
-            return CK_TOK_SLASH;
-        }
+        return match(lexer, '=') ? CK_TOK_SLASH_EQUAL : CK_TOK_SLASH;
     case '*':
-        if (match(lexer, '=')) {
-            return CK_TOK_STAR_EQUAL;
-        } else {
-            return CK_TOK_STAR;
-        }
+        return match(lexer, '=') ? CK_TOK_STAR_EQUAL : CK_TOK_STAR;
     case '!':
-        if (match(lexer, '=')) {
-            return CK_TOK_BANG_EQUAL;
-        } else {
-            return CK_TOK_BANG;
-        }
+        return match(lexer, '=') ? CK_TOK_BANG_EQUAL : CK_TOK_BANG;
     case '=':
-        if (match(lexer, '=')) {
-            return CK_TOK_EQUAL_EQUAL;
-        } else {
-            return CK_TOK_EQUAL;
-        }
+        return match(lexer, '=') ? CK_TOK_EQUAL_EQUAL : CK_TOK_EQUAL;
     case '>':
-        if (match(lexer, '=')) {
-            return CK_TOK_GREATER_EQUAL;
-        } else {
-            return CK_TOK_GREATER;
-        }
+        return match(lexer, '=') ? CK_TOK_GREATER_EQUAL : CK_TOK_GREATER;
     case '<':
-        if (match(lexer, '=')) {
-            return CK_TOK_LESS_EQUAL;
-        } else {
-            return CK_TOK_LESS;
-        }
+        return match(lexer, '=') ? CK_TOK_LESS_EQUAL : CK_TOK_LESS;
     case '"':
         return lex_string(lexer);
     }

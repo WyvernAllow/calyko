@@ -37,7 +37,6 @@ typedef enum ck_token_type {
 
     CK_TOK_AND,
     CK_TOK_OR,
-    CK_TOK_NOT,
     CK_TOK_IF,
     CK_TOK_ELSE,
     CK_TOK_ELIF,
