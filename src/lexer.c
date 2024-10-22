@@ -152,7 +152,7 @@ static ck_token_type next_type(ck_lexer *lexer) {
 
     if (isalpha(c) || c == '_') {
         return lex_identifier(lexer);
-    };
+    }
 
     switch (c) {
     case '(':
