@@ -1,10 +1,11 @@
 #include "lexer.h"
-#include "utils.h"
 
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
 #include <assert.h>
+#include <ctype.h>
+#include <stdbool.h>
+#include <string.h>
+
+#include "utils.h"
 
 static bool is_at_end(const ck_lexer *lexer) {
     return lexer->source[lexer->current] == '\0';
@@ -15,7 +16,7 @@ static char peek(const ck_lexer *lexer) {
 }
 
 static char peek_next(const ck_lexer *lexer) {
-    if(is_at_end(lexer)) {
+    if (is_at_end(lexer)) {
         return '\0';
     }
 
@@ -25,7 +26,7 @@ static char peek_next(const ck_lexer *lexer) {
 static char advance(ck_lexer *lexer) {
     char c = peek(lexer);
     lexer->current++;
-    if(c == '\n') {
+    if (c == '\n') {
         lexer->line++;
     }
 
@@ -33,7 +34,7 @@ static char advance(ck_lexer *lexer) {
 }
 
 static bool match(ck_lexer *lexer, char c) {
-    if(peek(lexer) == c) {
+    if (peek(lexer) == c) {
         advance(lexer);
         return true;
     }
@@ -42,35 +43,33 @@ static bool match(ck_lexer *lexer, char c) {
 }
 
 static void skip_whitespace(ck_lexer *lexer) {
-    while(true) {
+    while (true) {
         char c = peek(lexer);
-        if(isspace(c)) {
+        if (isspace(c)) {
             advance(lexer);
-        }
-        else if(c == '#') {
+        } else if (c == '#') {
             /* '#' is the start of a comment,
-             *  therefore we ignore the rest of the line. 
-            */
-            while(peek(lexer) != '\n' && !is_at_end(lexer)) {
+             *  therefore we ignore the rest of the line.
+             */
+            while (peek(lexer) != '\n' && !is_at_end(lexer)) {
                 advance(lexer);
             }
-        }
-        else {
+        } else {
             return;
         }
     }
 }
 
 static ck_token_type lex_number(ck_lexer *lexer) {
-    while(isdigit(peek(lexer))) {
+    while (isdigit(peek(lexer))) {
         advance(lexer);
     }
-    
-    if(peek(lexer) == '.' && isdigit(peek_next(lexer))) {
+
+    if (peek(lexer) == '.' && isdigit(peek_next(lexer))) {
         /* Consume the period. */
         advance(lexer);
 
-        while(isdigit(peek(lexer))) {
+        while (isdigit(peek(lexer))) {
             advance(lexer);
         }
     }
@@ -79,14 +78,14 @@ static ck_token_type lex_number(ck_lexer *lexer) {
 }
 
 static ck_token_type lex_string(ck_lexer *lexer) {
-    while(peek(lexer) != '"' && !is_at_end(lexer)) {
+    while (peek(lexer) != '"' && !is_at_end(lexer)) {
         advance(lexer);
     }
 
     /* A second quote was never found and
      * therefore the string is unterminated.
-    */
-    if(is_at_end(lexer)) {
+     */
+    if (is_at_end(lexer)) {
         return CK_TOK_ERR_UNTERMINATED_STRING;
     }
 
@@ -103,26 +102,18 @@ typedef struct keyword_pair {
 } keyword_pair;
 
 static const keyword_pair keywords[] = {
-    {CK_TOK_AND, "and", 3},
-    {CK_TOK_OR, "or", 2},
-    {CK_TOK_NOT, "not", 3},
-    {CK_TOK_IF, "if", 2},
-    {CK_TOK_ELSE, "else", 4},
-    {CK_TOK_ELIF, "elif", 4},
-    {CK_TOK_FN, "fn", 2},
-    {CK_TOK_VAR, "var", 3},
-    {CK_TOK_FOR, "for", 3},
-    {CK_TOK_IN, "in", 2},
-    {CK_TOK_WHILE, "while", 5},
-    {CK_TOK_TRUE, "true", 4},
-    {CK_TOK_FALSE, "false", 5},
-    {CK_TOK_NONE, "none", 4},
-    {CK_TOK_BREAK, "break", 5},
-    {CK_TOK_RETURN, "return", 6},
+    {CK_TOK_AND, "and", 3},     {CK_TOK_OR, "or", 2},
+    {CK_TOK_NOT, "not", 3},     {CK_TOK_IF, "if", 2},
+    {CK_TOK_ELSE, "else", 4},   {CK_TOK_ELIF, "elif", 4},
+    {CK_TOK_FN, "fn", 2},       {CK_TOK_VAR, "var", 3},
+    {CK_TOK_FOR, "for", 3},     {CK_TOK_IN, "in", 2},
+    {CK_TOK_WHILE, "while", 5}, {CK_TOK_TRUE, "true", 4},
+    {CK_TOK_FALSE, "false", 5}, {CK_TOK_NONE, "none", 4},
+    {CK_TOK_BREAK, "break", 5}, {CK_TOK_RETURN, "return", 6},
 };
 
 static ck_token_type lex_identifier(ck_lexer *lexer) {
-    while(isalpha(peek(lexer)) || isdigit(peek(lexer) || peek(lexer) == '_')) {
+    while (isalpha(peek(lexer)) || isdigit(peek(lexer) || peek(lexer) == '_')) {
         advance(lexer);
     }
 
@@ -131,14 +122,14 @@ static ck_token_type lex_identifier(ck_lexer *lexer) {
 
     /* TODO: Linear search was chosen for simplicity,
      * but a hashmap or trie might be faster.
-    */
-    for(size_t i = 0; i < CK_ARRAY_LENGTH(keywords); i++) {
+     */
+    for (size_t i = 0; i < CK_ARRAY_LENGTH(keywords); i++) {
         const keyword_pair pair = keywords[i];
-        if(pair.name_len != lexeme_length) {
+        if (pair.name_len != lexeme_length) {
             continue;
         }
 
-        if(memcmp(pair.name, lexeme, pair.name_len) == 0) {
+        if (memcmp(pair.name, lexeme, pair.name_len) == 0) {
             return pair.type;
         }
     }
@@ -150,86 +141,86 @@ static ck_token_type next_type(ck_lexer *lexer) {
     skip_whitespace(lexer);
     lexer->start = lexer->current;
 
-    if(is_at_end(lexer)) {
+    if (is_at_end(lexer)) {
         return CK_TOK_END_OF_FILE;
     }
 
     char c = advance(lexer);
-    if(isdigit(c)) {
+    if (isdigit(c)) {
         return lex_number(lexer);
     }
 
-    if(isalpha(c) || c == '_') {
+    if (isalpha(c) || c == '_') {
         return lex_identifier(lexer);
     };
 
     switch (c) {
-    case '(': 
+    case '(':
         return CK_TOK_LPAREN;
-    case ')': 
+    case ')':
         return CK_TOK_RPAREN;
-    case '{': 
+    case '{':
         return CK_TOK_LBRACE;
-    case '}': 
+    case '}':
         return CK_TOK_RBRACE;
-    case '[': 
+    case '[':
         return CK_TOK_LBRACKET;
-    case ']': 
+    case ']':
         return CK_TOK_RBRACKET;
-    case ',': 
+    case ',':
         return CK_TOK_COMMA;
-    case '.': 
+    case '.':
         return CK_TOK_DOT;
-    case '~': 
+    case '~':
         return CK_TOK_TILDE;
-    case ';': 
+    case ';':
         return CK_TOK_SEMICOLON;
     case ':':
         return CK_TOK_COLON;
     case '-':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_MINUS_EQUAL;
         } else {
             return CK_TOK_MINUS;
         }
     case '+':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_PLUS_EQUAL;
         } else {
             return CK_TOK_PLUS;
         }
     case '/':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_SLASH_EQUAL;
         } else {
             return CK_TOK_SLASH;
         }
     case '*':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_STAR_EQUAL;
         } else {
             return CK_TOK_STAR;
         }
     case '!':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_BANG_EQUAL;
         } else {
             return CK_TOK_BANG;
         }
     case '=':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_EQUAL_EQUAL;
         } else {
             return CK_TOK_EQUAL;
         }
     case '>':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_GREATER_EQUAL;
         } else {
             return CK_TOK_GREATER;
         }
     case '<':
-        if(match(lexer, '=')) {
+        if (match(lexer, '=')) {
             return CK_TOK_LESS_EQUAL;
         } else {
             return CK_TOK_LESS;
@@ -255,12 +246,10 @@ ck_token ck_lexer_next(ck_lexer *lexer) {
     assert(lexer != NULL);
 
     ck_token_type type = next_type(lexer);
-    ck_token result = {
-        .type = type,
-        .start = lexer->start,
-        .length = lexer->current - lexer->start,
-        .line = lexer->line
-    };
+    ck_token result = {.type = type,
+                       .start = lexer->start,
+                       .length = lexer->current - lexer->start,
+                       .line = lexer->line};
 
     return result;
 }

@@ -1,4 +1,5 @@
 #include "token_type.h"
+
 #include <assert.h>
 
 const char *ck_token_type_str(ck_token_type type) {

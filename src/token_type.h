@@ -2,17 +2,17 @@
 #define CK_TOKEN_TYPE
 
 typedef enum ck_token_type {
-    CK_TOK_LPAREN,                  
-    CK_TOK_RPAREN,                  
-    CK_TOK_LBRACE,                  
-    CK_TOK_RBRACE,                  
-    CK_TOK_LBRACKET,                
-    CK_TOK_RBRACKET,                
-    CK_TOK_COMMA,                   
-    CK_TOK_DOT,                     
-    CK_TOK_TILDE,                   
-    CK_TOK_SEMICOLON,               
-    CK_TOK_COLON,                   
+    CK_TOK_LPAREN,
+    CK_TOK_RPAREN,
+    CK_TOK_LBRACE,
+    CK_TOK_RBRACE,
+    CK_TOK_LBRACKET,
+    CK_TOK_RBRACKET,
+    CK_TOK_COMMA,
+    CK_TOK_DOT,
+    CK_TOK_TILDE,
+    CK_TOK_SEMICOLON,
+    CK_TOK_COLON,
 
     CK_TOK_MINUS,
     CK_TOK_MINUS_EQUAL,
@@ -29,7 +29,7 @@ typedef enum ck_token_type {
     CK_TOK_GREATER,
     CK_TOK_GREATER_EQUAL,
     CK_TOK_LESS,
-    CK_TOK_LESS_EQUAL,  
+    CK_TOK_LESS_EQUAL,
 
     CK_TOK_IDENTIFIER,
     CK_TOK_STRING,

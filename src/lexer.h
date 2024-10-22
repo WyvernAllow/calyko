@@ -1,7 +1,7 @@
 #ifndef CK_LEXER_H
 #define CK_LEXER_H
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include "token_type.h"
 

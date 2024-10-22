@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "lexer.h"
 
@@ -7,11 +7,11 @@
 
 static void repl(void) {
     char buffer[CK_REPL_BUFSIZE];
-    
-    while(true) {
+
+    while (true) {
         printf("> ");
 
-        if(!fgets(buffer, sizeof(buffer), stdin)) {
+        if (!fgets(buffer, sizeof(buffer), stdin)) {
             printf("\n");
             break;
         }
@@ -20,14 +20,11 @@ static void repl(void) {
         ck_lexer_init(&lexer, buffer);
 
         ck_token next = ck_lexer_next(&lexer);
-        while(next.type != CK_TOK_END_OF_FILE) {
+        while (next.type != CK_TOK_END_OF_FILE) {
             const char *slice = lexer.source + next.start;
             printf("type: %s \n\tlexeme: %.*s \n\tln: %zu\n",
-                ck_token_type_str(next.type),
-                (int)next.length,
-                slice,
-                next.line
-            );
+                   ck_token_type_str(next.type), (int)next.length, slice,
+                   next.line);
 
             next = ck_lexer_next(&lexer);
         }
