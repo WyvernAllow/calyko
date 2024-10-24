@@ -8,6 +8,8 @@ add_executable(${PROJECT_NAME}
     src/token_type.h
     src/token_type.c
     src/utils.h
+    src/opcode.h
+    src/opcode.c
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
