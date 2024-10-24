@@ -1,6 +1,5 @@
 #include "lexer.h"
 
-#include <assert.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
@@ -201,9 +200,6 @@ static ck_token_type next_type(ck_lexer *lexer) {
 }
 
 void ck_lexer_init(ck_lexer *lexer, const char *source) {
-    assert(lexer != NULL);
-    assert(source != NULL);
-
     lexer->source = source;
     lexer->start = 0;
     lexer->current = 0;
@@ -211,8 +207,6 @@ void ck_lexer_init(ck_lexer *lexer, const char *source) {
 }
 
 ck_token ck_lexer_next(ck_lexer *lexer) {
-    assert(lexer != NULL);
-
     ck_token_type type = next_type(lexer);
     ck_token result = {.type = type,
                        .start = lexer->start,

@@ -1,10 +1,6 @@
 #include "opcode.h"
 
-#include <assert.h>
-
 const char *ck_opcode_str(ck_opcode opcode) {
-    assert(opcode >= 0 && opcode < CK_OPCODE_COUNT);
-
     switch (opcode) {
     case CK_OP_RETURN:
         return "RETURN";
