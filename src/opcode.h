@@ -12,7 +12,7 @@ typedef enum ck_opcode {
 
     /* This instruction is temporary. In the future, some kind of FFI would
      * be better.
-    */
+     */
     CK_OP_PRINT,
 
     CK_OPCODE_COUNT
