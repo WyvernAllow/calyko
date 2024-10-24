@@ -39,5 +39,5 @@ uint8_t ck_chunk_write_constant(ck_chunk *chunk, ck_value value) {
 
     chunk->constants[chunk->constants_len] = value;
     chunk->constants_len++;
-    return chunk->constants_len - 1;
+    return (uint8_t)(chunk->constants_len - 1);
 }
