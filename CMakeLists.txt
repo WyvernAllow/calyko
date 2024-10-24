@@ -10,6 +10,7 @@ add_executable(${PROJECT_NAME}
     src/utils.h
     src/opcode.h
     src/opcode.c
+    src/value.h
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
