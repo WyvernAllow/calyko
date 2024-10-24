@@ -11,6 +11,10 @@ add_executable(${PROJECT_NAME}
     src/opcode.h
     src/opcode.c
     src/value.h
+    src/chunk.h
+    src/chunk.c
+    src/vm.h
+    src/vm.c
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
