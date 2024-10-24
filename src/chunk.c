@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "utils.h"
+
 void ck_chunk_init(ck_chunk *chunk) {
     chunk->code = NULL;
     chunk->code_len = 0;
@@ -16,7 +18,7 @@ void ck_chunk_free(ck_chunk *chunk) {
 
 void ck_chunk_write(ck_chunk *chunk, uint8_t byte) {
     if (chunk->code_len + 1 > chunk->code_cap) {
-        chunk->code_cap = max(8, chunk->code_cap * 2);
+        chunk->code_cap = CK_MAX(8, chunk->code_cap * 2);
         chunk->code =
             realloc(chunk->code, chunk->code_cap * sizeof(*chunk->code));
         if (!chunk->code) {
