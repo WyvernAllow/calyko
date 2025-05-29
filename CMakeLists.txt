@@ -15,8 +15,10 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 add_subdirectory(deps/glm)
 add_subdirectory(deps/spdlog)
+add_subdirectory(deps/stb_image_write)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glm
     spdlog
+    stb_image_write
 )
